@@ -19,11 +19,26 @@ const sequelize = new Sequelize(
   }
 );
 
-const UserModel = require('./User');
-const User = UserModel(sequelize);
+// Modelos
+const User = require('./User')(sequelize);
+const Category = require('./Category')(sequelize);
+const Product = require('./Product')(sequelize);
+const Movement = require('./Movement')(sequelize);
+
+// Asociaciones
+// Una categoría tiene muchos productos; un producto pertenece a una categoría
+Category.hasMany(Product, { foreignKey: 'categoryId', as: 'productos' });
+Product.belongsTo(Category, { foreignKey: 'categoryId', as: 'categoria' });
+
+// Un producto tiene muchos movimientos; un movimiento pertenece a un producto
+Product.hasMany(Movement, { foreignKey: 'productId', as: 'movimientos', onDelete: 'CASCADE' });
+Movement.belongsTo(Product, { foreignKey: 'productId', as: 'producto' });
 
 module.exports = {
   sequelize,
   Sequelize,
-  User
+  User,
+  Category,
+  Product,
+  Movement
 };
