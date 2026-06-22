@@ -1,58 +1,63 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../services/authService';
 
-function Login() { 
-    const [email, setEmail] = useState(''); // email y password son los campos del formulario de login
-    const [password, setPassword] = useState(''); 
+function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e) => { // se ejecuta cuando se envía el formulario de login
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        try {
-            const data = await login(email, password);
+    try {
+      const data = await login(email, password);
 
-            localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.token);
 
-            console.log(data);
+      alert('Login exitoso');
+      navigate('/dashboard');
+    } catch (error) {
+      console.error(error);
+      alert('Error al iniciar sesión');
+    }
+  };
 
-            alert('Login exitoso');
-            window.location.href = '/profile';
-        } catch (error) {
-        console.error(error);
-
-        alert('Error al iniciar sesión');
-        }
-    };
-
-    return (
-        <div>
+  return (
+    <div className="auth-page">
+      <div className="auth-card">
         <h1>Login</h1>
 
         <form onSubmit={handleSubmit}>
-            <input
+          <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            />
+          />
 
-            <br />
-
-            <input
+          <input
             type="password"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            />
+          />
 
-            <br />
-
-            <button type="submit">
+          <button type="submit">
             Iniciar sesión
-            </button>
+          </button>
         </form>
-        </div>
-    );
+
+        <p>
+          Usuario demo: <strong>admin@inventario.com</strong>
+        </p>
+
+        <p>
+          ¿No tenés cuenta? <Link to="/register">Registrarse</Link>
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default Login;

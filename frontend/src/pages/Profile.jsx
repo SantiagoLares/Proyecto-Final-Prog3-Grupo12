@@ -1,45 +1,99 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import { obtenerPerfil } from '../services/authService';
 
 function Profile() {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const [cargando, setCargando] = useState(true);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        
-        const fetchUser = async () => {
-        try {
-            const token = localStorage.getItem('token');
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
 
-            if (!token) {
-            window.location.href = '/login';
-            return;
-        }   
+      if (!token) {
+        navigate('/login');
+        return;
+      }
 
-            const response = await axios.get('/api/auth/perfil', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-            });
+      try {
+        const data = await obtenerPerfil(token);
+        setUser(data.user);
+      } catch (error) {
+        console.error(error);
+        localStorage.removeItem('token');
+        navigate('/login');
+      } finally {
+        setCargando(false);
+      }
+    };
 
-            setUser(response.data.user);
-        } catch (error) {
-            console.log('Error al obtener perfil:', error);
-            window.location.href = '/login';
-        }
-        };
+    fetchUser();
+  }, [navigate]);
 
-        fetchUser();
-    }, []);
+  const cerrarSesion = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
-    if (!user) return <p>Cargando perfil...</p>;
-
+  if (cargando) {
     return (
-        <div>
-        <h1>Perfil</h1>
-        <p>Email: {user.email}</p>
-        <p>ID: {user.id}</p>
-        </div>
+      <div className="page-container">
+        <p>Cargando perfil...</p>
+      </div>
     );
-    }
+  }
+
+  return (
+    <div className="page-container profile-page">
+      <div className="page-header">
+        <div>
+          <h1>Perfil de usuario</h1>
+          <p>Datos del usuario autenticado en el sistema.</p>
+        </div>
+
+        <div className="nav-actions">
+          <Link to="/dashboard">Panel</Link>
+          <Link to="/productos">Productos</Link>
+        </div>
+      </div>
+
+      <div className="profile-card">
+        <div className="profile-avatar">
+          {user?.nombre?.charAt(0)?.toUpperCase() || 'U'}
+        </div>
+
+        <div className="profile-info">
+          <h2>{user?.nombre || 'Usuario'}</h2>
+
+          <div className="profile-detail">
+            <span>Email</span>
+            <strong>{user?.email}</strong>
+          </div>
+
+          <div className="profile-detail">
+            <span>ID de usuario</span>
+            <strong>{user?.id}</strong>
+          </div>
+
+          <div className="profile-detail">
+            <span>Estado</span>
+            <strong className="status-ok">Sesión activa</strong>
+          </div>
+        </div>
+      </div>
+
+      <div className="profile-actions">
+        <Link className="button-link" to="/dashboard">
+          Volver al panel
+        </Link>
+
+        <button className="delete-btn" onClick={cerrarSesion}>
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default Profile;
