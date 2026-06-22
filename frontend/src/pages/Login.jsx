@@ -9,11 +9,13 @@ function Login() {
         e.preventDefault();
 
         try {
-        const data = await login(email, password); //se llama login para autenticacion y se le pasan email y password como argumentos
+            const data = await login(email, password);
 
-        console.log(data); 
+            localStorage.setItem('token', data.token);
 
-        alert('Login exitoso'); 
+            console.log(data);
+
+            alert('Login exitoso'); 
         } catch (error) {
         console.error(error);
 
