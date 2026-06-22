@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { obtenerPerfil } from '../services/authService';
+import axios from 'axios';
 
 function Profile() {
     const [user, setUser] = useState(null);
