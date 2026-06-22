@@ -8,6 +8,14 @@ import Profile from './pages/Profile';
 import Productos from './pages/Productos';
 import Categorias from './pages/Categorias';
 import Movimientos from './pages/Movimientos';
+import Dashboard from './pages/Dashboard';
+console.log('Login:', Login);
+console.log('Register:', Register);
+console.log('Profile:', Profile);
+console.log('Productos:', Productos);
+console.log('Categorias:', Categorias);
+console.log('Movimientos:', Movimientos);
+console.log('Dashboard:', Dashboard);
 
 function App() {
   return (
@@ -17,6 +25,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/productos" element={<Productos />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/movimientos" element={<Movimientos />} />

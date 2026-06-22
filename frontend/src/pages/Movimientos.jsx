@@ -15,8 +15,19 @@ function Movimientos() {
     alert("Movimiento registrado");
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
+return (
+  <div className="page-container">
+    <div className="page-header">
+      <h2>Movimientos de inventario</h2>
+
+      <div className="nav-actions">
+        <a href="/dashboard">Panel</a>
+        <a href="/productos">Productos</a>
+        <a href="/categorias">Categorías</a>
+      </div>
+    </div>
+
+    <form className="form-row" onSubmit={handleSubmit}>
       <input
         placeholder="Producto ID"
         onChange={(e) =>
@@ -42,7 +53,7 @@ function Movimientos() {
 
       <button>Registrar</button>
     </form>
-  );
-}
+  </div>
+);}
 
 export default Movimientos;

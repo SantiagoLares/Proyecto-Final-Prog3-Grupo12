@@ -18,10 +18,15 @@ router.get('/health', (req, res) => {
 // Rutas de autenticación
 router.use('/auth', authRoutes);
 
-// Rutas del inventario (protegidas)
+// Rutas del inventario en inglés
 router.use('/products', productRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/movements', movementRoutes);
+
+// Alias en español para el frontend actual
+router.use('/productos', productRoutes);
+router.use('/categorias', categoryRoutes);
+router.use('/movimientos', movementRoutes);
 
 // Ruta de ejemplo
 router.get('/test', (req, res) => {
