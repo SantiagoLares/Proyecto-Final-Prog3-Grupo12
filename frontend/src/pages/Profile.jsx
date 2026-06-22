@@ -13,7 +13,7 @@ function Profile() {
             if (!token) {
             window.location.href = '/login';
             return;
-        }
+        }   
 
             const response = await axios.get('/api/auth/perfil', {
             headers: {
@@ -24,6 +24,7 @@ function Profile() {
             setUser(response.data.user);
         } catch (error) {
             console.log('Error al obtener perfil:', error);
+            window.location.href = '/login';
         }
         };
 
