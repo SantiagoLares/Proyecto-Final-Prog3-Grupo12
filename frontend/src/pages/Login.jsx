@@ -1,7 +1,53 @@
+import { useState } from 'react';
+import { login } from '../services/authService';
+
 function Login() { 
-    return ( 
+    const [email, setEmail] = useState(''); // email y password son los campos del formulario de login
+    const [password, setPassword] = useState(''); 
+
+    const handleSubmit = async (e) => { // se ejecuta cuando se envía el formulario de login
+        e.preventDefault();
+
+        try {
+        const data = await login(email, password); //se llama login para autenticacion y se le pasan email y password como argumentos
+
+        console.log(data); 
+
+        alert('Login exitoso'); 
+        } catch (error) {
+        console.error(error);
+
+        alert('Error al iniciar sesión');
+        }
+    };
+
+    return (
         <div>
-            <h1>Login</h1>
+        <h1>Login</h1>
+
+        <form onSubmit={handleSubmit}>
+            <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <br />
+
+            <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <br />
+
+            <button type="submit">
+            Iniciar sesión
+            </button>
+        </form>
         </div>
     );
 }
