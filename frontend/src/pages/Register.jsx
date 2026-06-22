@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { register } from '../services/authService';
 
-const [nombre, setNombre] = useState('');
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
+function Register() {
+    const [nombre, setNombre] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
@@ -55,3 +57,6 @@ return (
         </form>
     </div>
 );
+}
+
+export default Register;
