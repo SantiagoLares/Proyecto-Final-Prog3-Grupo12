@@ -15,7 +15,8 @@ function Login() {
 
             console.log(data);
 
-            alert('Login exitoso'); 
+            alert('Login exitoso');
+            window.location.href = '/profile';
         } catch (error) {
         console.error(error);
 
