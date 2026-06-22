@@ -5,9 +5,15 @@ function Profile() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
+        
         const fetchUser = async () => {
         try {
             const token = localStorage.getItem('token');
+
+            if (!token) {
+            window.location.href = '/login';
+            return;
+        }
 
             const response = await axios.get('/api/auth/perfil', {
             headers: {
