@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const authRoutes = require('./auth');
+const productRoutes = require('./products');
+const categoryRoutes = require('./categories');
+const movementRoutes = require('./movements');
 
 // Ruta de prueba
 router.get('/health', (req, res) => {
@@ -14,6 +17,11 @@ router.get('/health', (req, res) => {
 
 // Rutas de autenticación
 router.use('/auth', authRoutes);
+
+// Rutas del inventario (protegidas)
+router.use('/products', productRoutes);
+router.use('/categories', categoryRoutes);
+router.use('/movements', movementRoutes);
 
 // Ruta de ejemplo
 router.get('/test', (req, res) => {

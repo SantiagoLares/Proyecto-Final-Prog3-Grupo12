@@ -1,19 +1,27 @@
 import React from 'react';
 import './App.css';
 
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
+import Productos from './pages/Productos';
+import Categorias from './pages/Categorias';
+import Movimientos from './pages/Movimientos';
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>¡Bienvenido a tu nueva aplicación!</h1>
-        <p>Frontend React funcionando correctamente</p>
-        <p>
-          <a href="/api/health" target="_blank" rel="noopener noreferrer">
-            Verificar estado de la API
-          </a>
-        </p>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/categorias" element={<Categorias />} />
+        <Route path="/movimientos" element={<Movimientos />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
