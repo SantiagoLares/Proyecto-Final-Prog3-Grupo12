@@ -23,9 +23,13 @@ const register = async (req, res) => {
       token
     });
   } catch (error) {
-    console.error('Error en register:', error);
-    res.status(500).json({ error: 'Error al registrar usuario' });
-  }
+  console.error('Error en register:', error);
+
+  res.status(500).json({
+    error: error.message,
+    stack: error.stack
+  });
+}
 };
 
 const login = async (req, res) => {
